@@ -6,11 +6,10 @@ function App() {
   const [mail, setMail] = useState('');
   const [mobile, setMobile] = useState('');
   const [degree, setDegree] = useState('0');
-  const [location, setLocation] = useState(''); // Provide default empty string
+  const [location, setLocation] = useState('');
   const [gender, setGender] = useState('0');
   const [items, setItems] = useState([]);
   const [selectItem, selectIndex] = useState(null);
-
 
   function Add() {
     if (degree !== '0' && gender !== '0') {
@@ -86,16 +85,12 @@ function App() {
 
   const EditContent = (index) => {
     const selectedItem = items[index];
-    if (items.length > index && index  >= 0) 
-    {
-      selectIndex(index);
-      setName(selectedItem.name);
-      setMobile(selectedItem.mobile);
-      setMail(selectedItem.mail);
-      setDegree(selectedItem.degree);
-      setGender(selectedItem.gender);
-      setLocation(selectedItem.location); 
-    }
+    selectIndex(index);
+    setName(selectedItem.name);
+    setMobile(selectedItem.mobile);
+    setMail(selectedItem.mail);
+    setDegree(selectedItem.degree);
+    setGender(selectedItem.gender);
   }
 
   const DeleteContent = (index) => {
@@ -105,43 +100,43 @@ function App() {
   }
 
   const UpdateContent = () => {
-    if (selectItem !== null) 
-    {
-      const updatedItems = [...items];
+    if (selectItem !== null) {
       if (name.trim() !== '') 
       {
-        updatedItems[selectItem].name = name.trim();
-      } 
-       if (mail.trim() !== '') 
-      {
-        updatedItems[selectItem].mail = mail.trim();
-      } 
-       if (mobile.trim() !== '') 
-      {
-        updatedItems[selectItem].mobile = mobile.trim();
-      } 
-       if (location.trim() !== '') 
-      {
-        updatedItems[selectItem].location = location.trim();
-      } 
-       if (gender !== '0' && gender !== items[selectItem].gender) 
-      {
-        updatedItems[selectItem].gender = getGender(gender);
-      } 
-       if (degree !== '0'&& degree !== items[selectItem].degree) 
-      {
-        updatedItems[selectItem].degree = getDegree(degree);
+        selectItem.name = name.trim();
       }
+      else if (mail.trim() !== '')
+      {
+        selectItem.mail = mail.trim();
+      }
+      else if (mobile.trim() !== '')
+      {
+        selectItem.mobile = mobile.trim();
+      }
+      else if (location.trim() !== '')
+      {
+        selectItem.location = location.trim();
+      }
+      else if (gender !== '0')
+      {
+        selectItem.gender = getGender(gender);
+      }
+      else if (degree !== '0') 
+      {
+        selectItem.degree = getDegree(degree);
+      }
+        const updatedItems = [...items];
 
-      setItems(updatedItems);
-      setDegree('0');
-      setGender('0');
-      setName('');
-      setMobile('');
-      setLocation('');
-      setMail('');
+        updatedItems[selectItem] = updated;
+        setItems(updatedItems);
+        setDegree('0');
+        setGender('0');
+        setName('');
+        setMobile('');
+        setLocation('');
+        setMail('');
+      }
     }
-  }
   
 
   return (
@@ -213,31 +208,21 @@ function App() {
           </thead>
           <tbody>
             {items.map((item, index) => (
-              <tr key={index} className={index % 2 !== 0 ? 'odd-row' : 'even-row'}>
+              <tr key={index}>
                 <td>{item.name}</td>
                 <td>{item.mail}</td>
                 <td>{item.mobile}</td>
                 <td className='deg'>{item.degree}</td>
                 <td>{item.location}</td>
                 <td>{item.gender}</td>
-                <td><button className='edit'   onClick={() => EditContent(index)}>edit</button></td>
-                <td><button className='update' onClick={() => UpdateContent(index)}>update</button></td>
+                <td><button className='edit' onClick={() => EditContent(index)}>edit</button></td>
+                <td><button className='update' onClick={UpdateContent}>update</button></td>
                 <td><button className='delete' onClick={() => DeleteContent(index)}>delete</button></td>
               </tr>
             ))}
           </tbody>
-
         </table>
-
       </div>
-
-      {/* <div className="successbox">
-        <div className="success">
-          <div className="suctit"></div>
-          <div className="note"></div>
-        </div>
-      </div> */}
-
     </div>
   );
 }
