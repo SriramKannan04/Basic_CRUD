@@ -209,6 +209,9 @@ function App() {
               <th>Degree</th>
               <th>Location</th>
               <th>Gender</th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
